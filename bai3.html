@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Quản lý sinh viên</h1>
+    <form>
+      <input id="input-name" type="text" placeholder="Tên sinh viên" />
+      <input id="input-age" type="number" placeholder="Tuổi" />
+      <input id="input-class" type="text" placeholder="Lớp(ví dụ: CNTT-12)" />
+      <button type="submit" id="button-submit">Thêm sinh viên</button>
+    </form>
+    <br />
+    <table border="1" cellspacing="0" cellpadding="10">
+      <tr>
+        <th>STT</th>
+        <th>Tên sinh viên</th>
+        <th>Tuổi</th>
+        <th>Lớp</th>
+        <th>Hành động</th>
+      </tr>
+      <tbody id="student-list"></tbody>
+    </table>
+    <script src="bai3.js"></script>
+  </body>
+</html>
