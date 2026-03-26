@@ -30,48 +30,74 @@ let renderData = () => {
   });
 };
 
-window.updateData = (id) => {
-  let checkId = students.find((student) => student.id === id);
-  if (!checkId) return;
+renderData();
 
-  inputName.value = checkId.name;
-  inputAge.value = checkId.age;
-  inputClass.value = checkId.class;
+let createData = () => {
+  btnSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  editId = id;
-  btnSubmit.innerText = "Cập nhật";
-};
+    let name = inputName.value.trim();
+    let age = inputAge.value.trim();
+    let className = inputClass.value.trim();
 
-btnSubmit.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  let name = inputName.value.trim();
-  let age = inputAge.value.trim();
-  let className = inputClass.value.trim();
-
-  if (editId !== null) {
-    let index = students.findIndex((s) => s.id === editId);
-    if (index !== -1) {
-      students[index] = { ...students[index], name, age, class: className };
-    }
-    editId = null;
-    btnSubmit.innerText = "Thêm sinh viên";
-  } else {
     let newStudent = {
       id: Date.now(),
-      name,
-      age,
+      name: name,
+      age: age,
       class: className,
     };
+
     students.push(newStudent);
-  }
+
+    renderData();
+    inputName.value = "";
+    inputAge.value = "";
+    inputClass.value = "";
+  });
+};
+
+createData();
+
+// updateData
+let btnUpdate = document.getElementById("btn-update");
+let btnCancel = document.getElementById("btn-cancel");
+
+let updateData = (id) => {
+  btnUpdate.style.display = "inline-block";
+  btnCancel.style.display = "inline-block";
+  btnSubmit.style.display = "none";
+
+  let findStudent = students.find((student) => {
+    return student.id === id;
+  });
+
+  inputName.value = findStudent.name;
+  inputAge.value = findStudent.age;
+  inputClass.value = findStudent.class;
+  editId = id;
+};
+
+let handleUpdate = () => {
+  let findIndexStudent = students.findIndex((student) => {
+    return student.id === editId;
+  });
+
+  students[findIndexStudent].name = inputName.value;
+  students[findIndexStudent].age = inputAge.value;
+  students[findIndexStudent].class = inputClass.value;
 
   localStorage.setItem("STUDENT_LIST", JSON.stringify(students));
+
   renderData();
 
   inputName.value = "";
   inputAge.value = "";
   inputClass.value = "";
-});
+  btnUpdate.style.display = "none";
+  btnCancel.style.display = "none";
+  btnSubmit.style.display = "inline-block";
 
-renderData();
+  editId = null;
+};
+
+btnUpdate.addEventListener("click", handleUpdate);
